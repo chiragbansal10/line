@@ -1,24 +1,20 @@
+"use client";
 
-"use client"; 
+import Head from "next/head";
+import styles from "../app/styles/Home.module.css";
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import { logos } from "./constants";
 
-import Head from 'next/head';
-import styles from '../app/styles/Home.module.css';
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
+export type LogoType = {
+  src: string;
+  alt: string;
+};
 
 export default function Home() {
-  const [currentLogos, setCurrentLogos] = useState([]);
+  // ** States
+  const [currentLogos, setCurrentLogos] = useState<LogoType[]>([]);
   const [batchIndex, setBatchIndex] = useState(0);
-  
-  const logos = [
-    { src: '/monzo.png', alt: 'Ramp' },
-    { src: '/remote.png', alt: 'Vercel' },
-    { src: '/mercury.png', alt: 'Scale' },
-    { src: '/boom.png', alt: 'Arc' },
-    { src: '/runway.png', alt: 'Cash App' },
-    { src: '/descript.png', alt: 'Retool' },
-    // Add any new logo objects here
-  ];
 
   const LOGOS_PER_BATCH = 6;
 
@@ -26,19 +22,25 @@ export default function Home() {
     const start = batchIndex * LOGOS_PER_BATCH;
     const end = start + LOGOS_PER_BATCH;
     setCurrentLogos(logos.slice(start, end));
-
     const timer = setInterval(() => {
-      setBatchIndex((prevIndex) => (prevIndex + 1) % Math.ceil(logos.length / LOGOS_PER_BATCH));
+      setBatchIndex(
+        (prevIndex) =>
+          (prevIndex + 1) % Math.ceil(logos.length / LOGOS_PER_BATCH)
+      );
     }, 3000);
 
     return () => clearInterval(timer); // Cleanup the timer
-  }, [batchIndex, logos]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [batchIndex]);
 
   return (
     <div className={styles.container}>
       <Head>
         <title>Linear - A tool for planning and building products</title>
-        <meta name="description" content="A tool for planning and building products" />
+        <meta
+          name="description"
+          content="A tool for planning and building products"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -60,13 +62,18 @@ export default function Home() {
       </nav>
 
       <main className={styles.main}>
-        <h1>Linear is a purpose-built tool for <br/> planning and building products</h1>
+        <h1>
+          Linear is a purpose-built tool for <br /> planning and building
+          products
+        </h1>
         <p>
-          Meet the system for modern software development.<br/> Streamline issues,
-          projects, and product roadmaps.
+          Meet the system for modern software development.
+          <br /> Streamline issues, projects, and product roadmaps.
         </p>
         <button className={styles.startButton}>Start building</button>
-        <button className={styles.newFeature}>New: Conversations on Quality <span>&gt;</span></button>
+        <button className={styles.newFeature}>
+          New: Conversations on Quality <span>&gt;</span>
+        </button>
       </main>
 
       <Image
@@ -82,7 +89,7 @@ export default function Home() {
           Powering the world best product teams. <br />
           <span>From next-gen startups to established enterprises.</span>
         </p>
-        
+
         <div className={styles.logosContainer}>
           {currentLogos.map((logo, index) => (
             <div key={index} className={styles.logoItem}>
@@ -91,34 +98,53 @@ export default function Home() {
           ))}
         </div>
       </section>
-     {/* Made the Morden products */}
-     <div className={styles.featuresSection}>
-      <div className={styles.madefor}>
-      <h1 className={styles.title}>Made for modern <br />product teams</h1>
-      <p className={styles.description}>
-        Linear is shaped by the practices and principles <br />
-        that distinguish world-class product teams <br />
-        from the rest: relentless focus, fast execution, <br /> and a commitment to the quality of craft.
-      </p>
+      {/* Made the Morden products */}
+      <div className={styles.featuresSection}>
+        <div className={styles.madefor}>
+          <h1 className={styles.title}>
+            Made for modern <br />
+            product teams
+          </h1>
+          <p className={styles.description}>
+            Linear is shaped by the practices and principles <br />
+            that distinguish world-class product teams <br />
+            from the rest: relentless focus, fast execution, <br /> and a
+            commitment to the quality of craft.
+          </p>
         </div>
-      
-      
-      <div className={styles.cardsContainer}>
-        <div className={styles.card}>
-          <Image src="/Capture5.png" alt="Product Development" width={200} height={150} />
-          <h2 className={styles.cardTitle}>Purpose-built for product development</h2>
-        </div>
-        <div className={styles.card}>
-          <Image src="/Capture6.png" alt="Fast Execution" width={200} height={150} />
-          <h2 className={styles.cardTitle}>Designed to move fast</h2>
-        </div>
-        <div className={styles.card}>
-          <Image src="/Capture7.png" alt="Crafted Perfection" width={200} height={150} />
-          <h2 className={styles.cardTitle}>Crafted to perfection</h2>
+
+        <div className={styles.cardsContainer}>
+          <div className={styles.card}>
+            <Image
+              src="/Capture5.png"
+              alt="Product Development"
+              width={200}
+              height={150}
+            />
+            <h2 className={styles.cardTitle}>
+              Purpose-built for product development
+            </h2>
+          </div>
+          <div className={styles.card}>
+            <Image
+              src="/Capture6.png"
+              alt="Fast Execution"
+              width={200}
+              height={150}
+            />
+            <h2 className={styles.cardTitle}>Designed to move fast</h2>
+          </div>
+          <div className={styles.card}>
+            <Image
+              src="/Capture7.png"
+              alt="Crafted Perfection"
+              width={200}
+              height={150}
+            />
+            <h2 className={styles.cardTitle}>Crafted to perfection</h2>
+          </div>
         </div>
       </div>
     </div>
-    </div>
   );
 }
-
